@@ -142,3 +142,12 @@
 @utility transition-smooth {
   transition: var(--transition-smooth);
 }
+
+#lovable-badge,
+#Lovable-badge,
+[id="lovable-badge"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
