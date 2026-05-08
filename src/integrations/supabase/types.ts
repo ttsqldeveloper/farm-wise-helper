@@ -14,7 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chats: {
+        Row: {
+          answer: string
+          created_at: string
+          id: string
+          question: string
+          user_id: string
+        }
+        Insert: {
+          answer: string
+          created_at?: string
+          id?: string
+          question: string
+          user_id: string
+        }
+        Update: {
+          answer?: string
+          created_at?: string
+          id?: string
+          question?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      crops: {
+        Row: {
+          common_diseases: string | null
+          created_at: string
+          crop_name: string
+          id: string
+          notes: string | null
+          season: string | null
+        }
+        Insert: {
+          common_diseases?: string | null
+          created_at?: string
+          crop_name: string
+          id?: string
+          notes?: string | null
+          season?: string | null
+        }
+        Update: {
+          common_diseases?: string | null
+          created_at?: string
+          crop_name?: string
+          id?: string
+          notes?: string | null
+          season?: string | null
+        }
+        Relationships: []
+      }
+      diagnoses: {
+        Row: {
+          confidence: number | null
+          created_at: string
+          id: string
+          image_url: string | null
+          prediction: string | null
+          raw: Json | null
+          recommendation: string | null
+          user_id: string
+        }
+        Insert: {
+          confidence?: number | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          prediction?: string | null
+          raw?: Json | null
+          recommendation?: string | null
+          user_id: string
+        }
+        Update: {
+          confidence?: number | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          prediction?: string | null
+          raw?: Json | null
+          recommendation?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          crop_types: string[] | null
+          email: string | null
+          full_name: string | null
+          id: string
+          location: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          crop_types?: string[] | null
+          email?: string | null
+          full_name?: string | null
+          id: string
+          location?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          crop_types?: string[] | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
