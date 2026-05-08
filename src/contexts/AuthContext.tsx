@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { api, auth } from "@/lib/api";
+import { supabase } from "@/integrations/supabase/client";
+import { api } from "@/lib/api";
 
 export interface FarmUser {
-  id?: string;
+  id: string;
   email: string;
   fullName?: string;
   full_name?: string;
@@ -27,37 +28,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const refresh = async () => {
-    if (!auth.getToken()) {
-      setUser(null);
-      return;
-    }
     try {
-      const res: any = await api.me();
-      setUser(res.user || res);
+      const u = await api.me();
+      setUser(u as FarmUser | null);
     } catch {
-      auth.clear();
       setUser(null);
     }
   };
 
   useEffect(() => {
+    // Set up listener FIRST
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) {
+        setUser(null);
+        return;
+      }
+      // Defer profile fetch to avoid deadlock inside the callback
+      setTimeout(() => {
+        refresh();
+      }, 0);
+    });
+
+    // Then check existing session
     refresh().finally(() => setLoading(false));
+
+    return () => {
+      sub.subscription.unsubscribe();
+    };
   }, []);
 
   const login = async (email: string, password: string) => {
-    const res: any = await api.login({ email, password });
-    auth.setToken(res.token);
-    setUser(res.user);
+    await api.login({ email, password });
+    await refresh();
   };
 
   const register = async (data: Parameters<typeof api.register>[0]) => {
-    const res: any = await api.register(data);
-    auth.setToken(res.token);
-    setUser(res.user);
+    await api.register(data);
+    await refresh();
   };
 
   const logout = () => {
-    auth.clear();
+    api.logout();
     setUser(null);
   };
 
