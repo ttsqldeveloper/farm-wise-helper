@@ -53,12 +53,14 @@ function Diagnose() {
     }
   };
 
-  const prediction = result?.prediction || result?.result || result;
+  const prediction = result?.prediction ?? result?.result ?? result;
   const label =
-    prediction?.class || prediction?.label || prediction?.disease || prediction?.prediction;
-  const confidence = prediction?.confidence ?? prediction?.score;
+    typeof prediction === "string"
+      ? prediction
+      : prediction?.class || prediction?.label || prediction?.disease || prediction?.prediction;
+  const confidence = result?.confidence ?? prediction?.confidence ?? prediction?.score;
   const recommendation =
-    prediction?.recommendation || prediction?.advice || prediction?.treatment;
+    result?.recommendation || prediction?.recommendation || prediction?.advice || prediction?.treatment;
   const imageUrl = result?.imageUrl || result?.image_url || result?.cloudinary_url;
 
   return (
