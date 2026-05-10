@@ -27,27 +27,6 @@ function NotFoundComponent() {
 }
 
 export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "FarmWise — AI Farming Companion" },
-      {
-        name: "description",
-        content:
-          "FarmWise: AI-powered plant disease diagnosis, farming chatbot, and crop guides for smarter agriculture.",
-      },
-      { property: "og:title", content: "FarmWise — AI Farming Companion" },
-      {
-        property: "og:description",
-        content: "Diagnose crop diseases, chat with a farming expert, and access crop guides.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "stylesheet", href: appCss }],
-  }),
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
 });
