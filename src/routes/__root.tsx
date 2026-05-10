@@ -1,5 +1,5 @@
-import { createRootRoute, Outlet, HeadContent, Scripts, Link } from "@tanstack/react-router";
-import appCss from "../styles.css?url";
+import { createRootRoute, Outlet, Link } from "@tanstack/react-router";
+import "../styles.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Layout from "@/components/Layout";
 import { Toaster } from "@/components/ui/sonner";
@@ -30,20 +30,6 @@ export const Route = createRootRoute({
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
 });
-
-function RootShell({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
 
 function RootComponent() {
   return (
